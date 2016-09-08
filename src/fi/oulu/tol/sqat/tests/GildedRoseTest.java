@@ -56,11 +56,11 @@ public class GildedRoseTest {
 		
 	}
 	@Test
-	public void testUpdateEndofDay_Negativquality() {
+	public void testUpdateEndofDay_Brie_AfterSellIn() {
 		GildedRose store= new GildedRose();
-		store.addItem(new Item("Aged Brie",0,-10) );
+		store.addItem(new Item("Aged Brie",0,0) );
 		store.updateEndOfDay();
 		List<Item> items = store.getItems();
-		assertEquals("Quality is not incresing", -9, items.get(0).getQuality() );
+		assertEquals("Quality is not incresing correctly", 2, items.get(0).getQuality() );
 	}
 }
