@@ -36,7 +36,31 @@ public class GildedRoseTest {
 	}
     
 	@Test
-	public void testUpdateEndOfDay() {
-		fail("Test not implemented");
+	public void testUpdateEndOfDay_Sulfuras() {
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 0,80));
+		store.updateEndOfDay();
+		List <Item> items = store.getItems();
+		assertEquals("Quality is not equal to 80",80, items.get(0).getQuality());
+		
+	}
+	
+	@Test
+	public void testUpdateEndOfDay_BackstagePass_MaxQuality() {
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 4,49) );
+		store.updateEndOfDay();
+		List <Item> items = store.getItems();
+		assertEquals("Quality is not equal to 50", 50, items.get(0).getQuality());
+		
+		
+	}
+	@Test
+	public void testUpdateEndofDay_Negativquality() {
+		GildedRose store= new GildedRose();
+		store.addItem(new Item("Aged Brie",0,-10) );
+		store.updateEndOfDay();
+		List<Item> items = store.getItems();
+		assertEquals("Quality is not incresing", -9, items.get(0).getQuality() );
 	}
 }
