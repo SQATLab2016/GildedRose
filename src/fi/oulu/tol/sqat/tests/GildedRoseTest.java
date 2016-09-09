@@ -36,7 +36,57 @@ public class GildedRoseTest {
 	}
     
 	@Test
-	public void testUpdateEndOfDay() {
-		fail("Test not implemented");
+	public void testUpdateEndOfDay_Sulfuras_Quality_Remains_Same() {
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemSulfuras = items.get(0);
+		assertEquals(80, itemSulfuras.getQuality());
+	}
+	
+	@Test
+	public void testUpdateEndOfDay_Dexterity_Quality_Twice_as_fast_20_13() {
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("+5 Dexterity Vest", 5, 20) );
+		
+		// Act
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemSulfuras = items.get(0);
+		assertEquals(13, itemSulfuras.getQuality());
+	}
+	
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_Quality_48_Doesnt_get_more_than_50() {
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 2, 48) );
+		
+		// Act
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(50, itemBrie.getQuality());
 	}
 }
