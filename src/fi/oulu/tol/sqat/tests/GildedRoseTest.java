@@ -34,6 +34,20 @@ public class GildedRoseTest {
 		Item itemBrie = items.get(0);
 		assertEquals(11, itemBrie.getQuality());
 	}
+	
+	public void testUpdateEndOfDay_AgedBrie_Quality_3_11() {
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 3, 10) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(12, itemBrie.getQuality());
+	}
     
 	@Test
 	public void testUpdateEndofDay_DexVest_Q10_20(){
