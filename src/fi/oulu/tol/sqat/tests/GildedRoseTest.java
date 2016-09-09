@@ -38,5 +38,53 @@ public class GildedRoseTest {
 	@Test
 	public void testUpdateEndOfDay() {
 		fail("Test not implemented");
+	}    
+	
+	@Test
+	public void testUpdateEndOfDay_BrieQuality50() 
+	{
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 0, 50) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(50, itemBrie.getQuality());		
+	}	
+	
+	@Test
+	public void testUpdateEndOfDay_BrieQuality49() 
+	{
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 0, 49) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(50, itemBrie.getQuality());		
+	}	
+	
+	@Test
+	public void testUpdateEndOfDay_BrieQuality48() 
+	{
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 0, 48) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(50, itemBrie.getQuality());		
 	}
 }
