@@ -36,7 +36,31 @@ public class GildedRoseTest {
 	}
     
 	@Test
-	public void testUpdateEndOfDay() {
-		fail("Test not implemented");
+	public void testUpdateEndOfDay() {		
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Backstage passes", 2, 10) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBackstagePasses = items.get(0);
+		assertEquals("Result of updateEndOfDay for SellIn is incorrect", 1, itemBackstagePasses.getSellIn());			
+	}
+	
+	@Test
+	public void testQualityOfSulfurasNeverDecreases() {
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Sulfuras", 2, 10) );
+		
+		// Act
+		store.updateEndOfDay();
+		
+		List<Item> items = store.getItems();
+		Item itemBackstagePasses = items.get(0);
+		assertEquals("Sulfuras quality decreases incorrectly", 10, itemBackstagePasses.getQuality());
 	}
 }
