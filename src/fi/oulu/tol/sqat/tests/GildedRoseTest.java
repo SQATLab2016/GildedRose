@@ -110,7 +110,7 @@ public class GildedRoseTest {
 	{
 		// Arrange
 		GildedRose store = new GildedRose();
-		store.addItem(new Item("Aged Brie", 1, 48) );
+		store.addItem(new Item("Aged Brie", 1, 40) );
 		
 		// Act
 		store.updateEndOfDay();
