@@ -87,4 +87,38 @@ public class GildedRoseTest {
 		Item itemBrie = items.get(0);
 		assertEquals(50, itemBrie.getQuality());		
 	}
+	
+	@Test
+	public void testUpdateEndOfDay_BrieQuality48_2days_expiresNextDay() 
+	{
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 1, 48) );
+		
+		// Act
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(50, itemBrie.getQuality());		
+	}
+	
+	@Test
+	public void testUpdateEndOfDay_BrieQuality40_2days_expiresNextDay() 
+	{
+		// Arrange
+		GildedRose store = new GildedRose();
+		store.addItem(new Item("Aged Brie", 1, 48) );
+		
+		// Act
+		store.updateEndOfDay();
+		store.updateEndOfDay();
+		
+		// Assert
+		List<Item> items = store.getItems();
+		Item itemBrie = items.get(0);
+		assertEquals(43, itemBrie.getQuality());		
+	}
 }
