@@ -20,7 +20,7 @@ public class GildedRoseTest {
 //   Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
 //   Item("Conjured Mana Cake", 3, 6));
 //	 15.09.2016
-//	 Update
+//	 Update 1.1
 
 	@Test
 	public void testUpdateEndOfDay_AgedBrie_Quality_10_11() {
