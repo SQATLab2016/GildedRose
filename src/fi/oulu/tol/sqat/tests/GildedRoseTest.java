@@ -19,7 +19,7 @@ public class GildedRoseTest {
 //   Item("Sulfuras, Hand of Ragnaros", 0, 80));
 //   Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
 //   Item("Conjured Mana Cake", 3, 6));
-//	15.09.2016
+//	 15.09.2016
 
 	@Test
 	public void testUpdateEndOfDay_AgedBrie_Quality_10_11() {
