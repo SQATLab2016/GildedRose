@@ -12,6 +12,18 @@ public class Item {
 		this.setQuality(quality);
 	}
     
+    public void decreaseQuality() {
+    	this.quality --;
+    }
+    
+    public void increaseQuality() {
+    	this.quality ++;
+    }
+    
+    public void decreaseSellIn() {
+    	this.sellIn --;
+    }
+    
 	/* Generated getter and setter code */
     public String getName() {
 		return name;
