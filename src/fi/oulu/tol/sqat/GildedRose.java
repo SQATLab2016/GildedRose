@@ -6,102 +6,121 @@ import java.util.List;
 
 public class GildedRose {
 
-	private static List<Item> items = null;
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
-        System.out.println("OMGHAI!");
-		
-        items = new ArrayList<Item>();
-        items.add(new Item("+5 Dexterity Vest", 10, 20));
-        items.add(new Item("Aged Brie", 2, 0));
-        items.add(new Item("Elixir of the Mongoose", 5, 7));
-        items.add(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
-        items.add(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
-        items.add(new Item("Conjured Mana Cake", 3, 6));
-
-        updateQuality();
-}
-
-
+	/* make strings more readable. 
+	*
+	* Principle: a. All the letters of the first word are capitalized.
+	*            b. All the first letter of the remaining words are capitalized and combined together.
+	*            c. Plus "NAME"
+	*            d. The three parts mentioned above are  by an underscore(_)
+	*/
+	private final String AGED_B_NAME = "Aged Brie";
+	private final String BACKSTAGE_PTATC_NAME = "Backstage passes to a TAFKAL80ETC concert";
+	private final String SULFURAS_HOR_NAME = "Sulfuras, Hand of Ragnaros";
 	
-    public static void updateQuality()
+	private List<Item> items = new ArrayList<Item>(); // Initialize
+	
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+	
+    public void updateEndOfDay()
     {
-        for (int i = 0; i < items.size(); i++)
+        for (int i = 0; i < items.size() ; i++)
         {
-            if ((!"Aged Brie".equals(items.get(i).getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) 
+            if ((!check_name_equal(AGED_B_NAME,i)) && !check_name_equal(BACKSTAGE_PTATC_NAME,i)) 
             {
-                if (items.get(i).getQuality() > 0)
+                if (item_quality(i) > 0)
                 {
-                    if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+                    if (!check_name_equal(SULFURAS_HOR_NAME,i))
                     {
-                        items.get(i).setQuality(items.get(i).getQuality() - 1);
+                       set_quality(i,-1);
                     }
                 }
             }
             else
             {
-                if (items.get(i).getQuality() < 50)
+                if (item_quality(i) < 50)
                 {
-                    items.get(i).setQuality(items.get(i).getQuality() + 1);
-
-                    if ("Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+                	set_quality(i, 1);
+                	
+                    if (check_name_equal(BACKSTAGE_PTATC_NAME,i))
                     {
-                        if (items.get(i).getSellIn() < 11)
+                        if (item_sellin(i) < 11)
                         {
-                            if (items.get(i).getQuality() < 50)
+                            if (item_quality(i) < 50)
                             {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
+                               set_quality(i, 1);
                             }
                         }
 
-                        if (items.get(i).getSellIn() < 6)
+                        if (item_sellin(i) < 6)
                         {
-                            if (items.get(i).getQuality() < 50)
+                            if (item_quality(i) < 50)
                             {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
+                                set_quality(i, 1);
                             }
                         }
                     }
                 }
             }
 
-            if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+            if (!check_name_equal(SULFURAS_HOR_NAME,i))
             {
-                items.get(i).setSellIn(items.get(i).getSellIn() - 1);
+                set_sellin(i, -1);
             }
 
-            if (items.get(i).getSellIn() < 0)
+            if (item_sellin(i) < 0)
             {
-                if (!"Aged Brie".equals(items.get(i).getName()))
+                if (!check_name_equal(AGED_B_NAME,i))
                 {
-                    if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+                    if (!check_name_equal(BACKSTAGE_PTATC_NAME,i))
                     {
-                        if (items.get(i).getQuality() > 0)
+                        if (item_quality(i) > 0)
                         {
-                            if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+                            if (!check_name_equal(SULFURAS_HOR_NAME,i))
                             {
-                                items.get(i).setQuality(items.get(i).getQuality() - 1);
+                                set_quality(i, -1);
                             }
                         }
-                    }
+                    } 
                     else
                     {
-                        items.get(i).setQuality(items.get(i).getQuality() - items.get(i).getQuality());
+                       set_quality(i, -item_quality(i));
                     }
                 }
                 else
                 {
-                    if (items.get(i).getQuality() < 50)
+                    if (item_quality(i) < 50)
                     {
-                        items.get(i).setQuality(items.get(i).getQuality() + 1);
+                        set_quality(i, 1);
                     }
                 }
             }
         }
     }
+    
+    
+    // private methods.
+	private int item_quality(int i){
+		return items.get(i).getQuality();
+	}
 
+    private void set_quality(int i,int change){
+    	items.get(i).setQuality(items.get(i).getQuality()+change);
+    }
+	
+    private int item_sellin(int i){
+    	return items.get(i).getSellIn();
+    }
+    
+    private void set_sellin(int i, int change){
+    	items.get(i).setSellIn(items.get(i).getSellIn()+change);
+    }
+    private boolean check_name_equal(String name, int i){
+    	return name.equals(items.get(i).getName());
+    }
 }
