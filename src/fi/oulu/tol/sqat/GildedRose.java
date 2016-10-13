@@ -29,74 +29,74 @@ public class GildedRose {
 	
     public void updateEndOfDay()
     {
-        for (int i = 0; i < items.size() ; i++)
+        for (Item item:items)
         {
-            if ((!check_name_equal(AGED_B_NAME,i)) && !check_name_equal(BACKSTAGE_PTATC_NAME,i)) 
+            if ( check_name_equal(AGED_B_NAME,item) || check_name_equal(BACKSTAGE_PTATC_NAME,item)) 
             {
-                if (item_quality(i) > 0)
-                {
-                    if (!check_name_equal(SULFURAS_HOR_NAME,i))
-                    {
-                       set_quality(i,-1);
-                    }
-                }
+            	 if (!item.hasReachedMaximumQuality())
+                 {
+                 	item.increaseQuality();
+                 	
+                     if (check_name_equal(BACKSTAGE_PTATC_NAME,item))
+                     {
+                         if (item.getSellIn() < 11)
+                         {
+                             if (!item.hasReachedMaximumQuality())
+                             {
+                                item.increaseQuality();
+                             }
+                         }
+
+                         if (item.getSellIn() < 6)
+                         {
+                             if (!item.hasReachedMaximumQuality())
+                             {
+                                 item.increaseQuality();
+                             }
+                         }
+                     }
+                 }
             }
             else
             {
-                if (item_quality(i) < 50)
+                if (!item.hasZeroQuality())
                 {
-                	set_quality(i, 1);
-                	
-                    if (check_name_equal(BACKSTAGE_PTATC_NAME,i))
+                    if (!check_name_equal(SULFURAS_HOR_NAME,item))
                     {
-                        if (item_sellin(i) < 11)
-                        {
-                            if (item_quality(i) < 50)
-                            {
-                               set_quality(i, 1);
-                            }
-                        }
-
-                        if (item_sellin(i) < 6)
-                        {
-                            if (item_quality(i) < 50)
-                            {
-                                set_quality(i, 1);
-                            }
-                        }
+                       item.decreaseQuality();
                     }
                 }
+               
+            }
+            if (!check_name_equal(SULFURAS_HOR_NAME,item))
+            {
+                item.decreaseSellIn();
             }
 
-            if (!check_name_equal(SULFURAS_HOR_NAME,i))
+            if (item.isExpired())
             {
-                set_sellin(i, -1);
-            }
-
-            if (item_sellin(i) < 0)
-            {
-                if (!check_name_equal(AGED_B_NAME,i))
+                if (check_name_equal(AGED_B_NAME,item))
                 {
-                    if (!check_name_equal(BACKSTAGE_PTATC_NAME,i))
+                    if (!item.hasReachedMaximumQuality())
                     {
-                        if (item_quality(i) > 0)
-                        {
-                            if (!check_name_equal(SULFURAS_HOR_NAME,i))
-                            {
-                                set_quality(i, -1);
-                            }
-                        }
-                    } 
-                    else
-                    {
-                       set_quality(i, -item_quality(i));
+                        item.increaseQuality();
                     }
                 }
                 else
                 {
-                    if (item_quality(i) < 50)
+                    if (check_name_equal(BACKSTAGE_PTATC_NAME,item))
                     {
-                        set_quality(i, 1);
+                    	item.setQuality(0);
+                    } 
+                    else
+                    {
+                    	 if (!item.hasZeroQuality())
+                         {
+                             if (!check_name_equal(SULFURAS_HOR_NAME,item))
+                             {
+                                 item.decreaseQuality();
+                             }
+                         }                       
                     }
                 }
             }
@@ -104,23 +104,10 @@ public class GildedRose {
     }
     
     
-    // private methods.
-	private int item_quality(int i){
-		return items.get(i).getQuality();
-	}
-
-    private void set_quality(int i,int change){
-    	items.get(i).setQuality(items.get(i).getQuality()+change);
-    }
-	
-    private int item_sellin(int i){
-    	return items.get(i).getSellIn();
-    }
     
-    private void set_sellin(int i, int change){
-    	items.get(i).setSellIn(items.get(i).getSellIn()+change);
-    }
-    private boolean check_name_equal(String name, int i){
-    	return name.equals(items.get(i).getName());
+    // private methods.
+    
+    private boolean check_name_equal(String name, Item it){
+    	return name.equals(it.getName());
     }
 }

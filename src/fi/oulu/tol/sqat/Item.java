@@ -2,9 +2,9 @@ package fi.oulu.tol.sqat;
 
 
 public class Item {
-    public String name;
-	public int sellIn; 
-    public int quality; 
+    private String name;
+	private int sellIn; 
+    private int quality; 
     
     public Item(String name, int sellIn, int quality) {
 		this.setName(name);
@@ -31,5 +31,24 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+	public void decreaseQuality(){
+		this.quality --;
+	}
+	public void increaseQuality(){
+		this.quality ++;
+	}
+	public void decreaseSellIn(){
+		this.sellIn --;
+	}
+    public boolean isExpired(){
+    	return sellIn<0 ;
+    }
+    public boolean hasZeroQuality(){
+    	return quality==0 ;
+    }
+    public boolean hasReachedMaximumQuality(){
+    	return quality>=50 ;
+    }
+    
 }
 
