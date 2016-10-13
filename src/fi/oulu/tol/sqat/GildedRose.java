@@ -19,80 +19,115 @@ public class GildedRose {
 	public GildedRose() {
 		items = new ArrayList<Item>();
 	}
+	
+	// sellin s
+	static private boolean isExpired(int s) {
+		if(s <= 0) return true;
+		return false;
+	}
+	
+	// quality q
+	static private boolean hasReachedMaximumQuality(int q) {
+		if(q >= 50) return true;
+		return false;
+	}
+	
+	// quality q
+	static private boolean hasZeroQuality(int q) {
+		if(q <= 0) return true;
+		return false;
+	}
+	
     public static void updateEndOfDay()
     {
-        for (int i = 0; i < items.size(); i++)
-        {
-            if ((!"Aged Brie".equals(items.get(i).getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) 
+    	// loop through all items.
+        for (Item item: items)
+    	{
+        	// if item is cheese or concert pass.
+        	if (("Aged Brie".equals(item.name)) || "Backstage passes to a TAFKAL80ETC concert".equals(item.name)) 
             {
-                if (items.get(i).getQuality() > 0)
+        		// if it hasn't reached max quality.
+                if (hasReachedMaximumQuality(item.getQuality()) == false)
                 {
-                    if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+                	item.increaseQuality();
+
+                	// if the item is concert pass.
+                    if ("Backstage passes to a TAFKAL80ETC concert".equals(item.name))
                     {
-                        items.get(i).setQuality(items.get(i).getQuality() - 1);
+                        if (item.getSellIn() < 11)
+                        {
+                            if (hasReachedMaximumQuality(item.getQuality()) == false)
+                            {
+                            	item.increaseQuality();
+                            }
+                        }
+
+                        if (item.getSellIn() < 6)
+                        {
+                            if (hasReachedMaximumQuality(item.getQuality()) == false)
+                            {
+                            	item.increaseQuality();
+                            }
+                        }
                     }
                 }
             }
+        	// item is something else.
             else
             {
-                if (items.get(i).getQuality() < 50)
+            	// decrease item quality if
+            	// 1. it has quality higher than zero
+            	// 2. is not sulfuras.
+            	if (hasZeroQuality(item.getQuality()) == false)
                 {
-                    items.get(i).setQuality(items.get(i).getQuality() + 1);
-
-                    if ("Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+                    if (!"Sulfuras, Hand of Ragnaros".equals(item.name))
                     {
-                        if (items.get(i).getSellIn() < 11)
-                        {
-                            if (items.get(i).getQuality() < 50)
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
-                            }
-                        }
-
-                        if (items.get(i).getSellIn() < 6)
-                        {
-                            if (items.get(i).getQuality() < 50)
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
-                            }
-                        }
+                    	item.decreaseQuality();
                     }
                 }
             }
-
-            if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
+        	
+        	// decrease selling value of all items, except sulfuras'.
+            if (!"Sulfuras, Hand of Ragnaros".equals(item.name))
             {
-                items.get(i).setSellIn(items.get(i).getSellIn() - 1);
+            	item.decreaseSellIn();
             }
 
-            if (items.get(i).getSellIn() < 0)
+            // if the item's selling is zero.
+            if (isExpired(item.getSellIn()))
             {
-                if (!"Aged Brie".equals(items.get(i).getName()))
+            	// increase cheese's quality.
+            	if ("Aged Brie".equals(item.name))
                 {
-                    if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+                    if (hasReachedMaximumQuality(item.getQuality()) == false)
                     {
-                        if (items.get(i).getQuality() > 0)
-                        {
-                            if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() - 1);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() - items.get(i).getQuality());
+                    	item.increaseQuality();
                     }
                 }
+            	// item is other than cheese.
                 else
                 {
-                    if (items.get(i).getQuality() < 50)
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() + 1);
-                    }
+                	// if item is concert pass -> it's worthless.
+	            	if ("Backstage passes to a TAFKAL80ETC concert".equals(item.name)) {
+	            		item.setQuality(0);
+	                }
+	            	
+	            	// item is something else.
+	                else 
+	                {
+	                	// decrease item's quality if 
+	                	// 1. it has higher quality than zero
+	                	// 2. is not sulfuras.
+	                	if (hasZeroQuality(item.getQuality()) == false)
+	                    {
+	                		if (!"Sulfuras, Hand of Ragnaros".equals(item.name))
+	                        {
+	                			item.decreaseQuality();
+	                        }
+	                    }
+	                }
                 }
             }
         }
     }
-
 }
