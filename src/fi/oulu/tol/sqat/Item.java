@@ -31,5 +31,35 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+	
+	public void decreaseQuality(int amount)
+	{
+		this.quality = quality - amount;
+	}
+	
+	public void increaseQuality(int amount)
+	{
+		this.quality = quality + amount;
+	}
+	
+	public void decreaseSellIn(int amount)
+	{
+		this.sellIn = sellIn - amount;
+	}
+	
+	public boolean hasReachedMaximumQuality() {
+		if (this.quality == 50)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean hasZeroQuality()
+	{
+		if (this.quality == 0)
+			return true;
+		else
+			return false;
+	}
 }
 
