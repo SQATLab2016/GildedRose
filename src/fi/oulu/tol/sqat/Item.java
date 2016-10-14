@@ -61,5 +61,13 @@ public class Item {
 		else
 			return false;
 	}
+	
+	public boolean isExpired()
+	{
+		if (this.sellIn < 0)
+			return true;
+		else
+			return false;
+	}
 }
 
