@@ -7,7 +7,11 @@ import java.util.List;
 public class GildedRose {
 
 	private static List<Item> items = null;
-
+	
+	private static String BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert";
+	private static String SULFURAS = "Sulfuras, Hand of Ragnaros";
+	private static String AGED_BRIE = "Aged Brie";
+	
 	public List<Item> getItems() {
 		return items;
 	}
@@ -24,13 +28,13 @@ public class GildedRose {
     {
     	for(Item item:items)
         {
-            if (item.getName().equals("Aged Brie") || item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) 
+            if (item.getName().equals(AGED_BRIE) || item.getName().equals(BACKSTAGE_PASS)) 
             {
             	if (!item.hasReachedMaximumQuality())
                 {
                     item.increaseQuality(1);
 
-                    if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert"))
+                    if (item.getName().equals(BACKSTAGE_PASS))
                     {
                     	if (!item.hasReachedMaximumQuality())
                     	{
@@ -46,7 +50,7 @@ public class GildedRose {
             {
             	if (!item.hasZeroQuality())
                 {
-                    if (!item.getName().equals("Sulfuras, Hand of Ragnaros"))
+                    if (!item.getName().equals(SULFURAS))
                     {
                     	item.decreaseQuality(1);
                     }
@@ -54,14 +58,14 @@ public class GildedRose {
                 
             }
 
-            if (!item.getName().equals("Sulfuras, Hand of Ragnaros"))
+            if (!item.getName().equals(SULFURAS))
             {
             	item.decreaseSellIn(1);
             }
 
             if (item.isExpired())
             {
-                if (item.getName().equals("Aged Brie"))
+                if (item.getName().equals(AGED_BRIE))
                 {
                 	if (!item.hasReachedMaximumQuality())
                     {
@@ -71,7 +75,7 @@ public class GildedRose {
                 }
                 else
                 {
-                	if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert"))
+                	if (item.getName().equals(BACKSTAGE_PASS))
                     {
                 		item.decreaseQuality(item.getQuality());
                         
