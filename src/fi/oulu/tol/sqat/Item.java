@@ -31,5 +31,23 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+	public void decreaseQuality(){
+		this.quality--;
+	}
+	public void increaseQuality(){
+		this.quality++;
+	}
+	public void decreaseSellIn(){
+		this.sellIn--;
+	}
+	public boolean isExpired(){
+		return this.sellIn<0;
+	}
+	public boolean hasZeroQuality(){
+		return this.quality==0;
+	}
+	public boolean hasReachedMaxQuality(){
+		return this.quality==50;
+	}
 }
 
