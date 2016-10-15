@@ -2,7 +2,8 @@ package fi.oulu.tol.sqat;
 
 
 public class Item {
-    String name;
+    private static final int MAX_QUALITY = 50;
+	String name;
     int sellIn; 
     int quality; 
     
@@ -30,6 +31,24 @@ public class Item {
 	}
 	public void setQuality(int quality) {
 		this.quality = quality;
+	}
+	public void decreaseQuality() {
+		setQuality(getQuality() - 1);
+	}
+	public void increaseQuality() {
+		setQuality(getQuality() + 1);
+	}
+	public void decreaseSellIn() {
+		setSellIn(getSellIn() - 1);
+	}
+	public boolean isExpired() {
+		return getSellIn() < 0;
+	}
+	public boolean hasZeroQuality() {
+		return getQuality() == 0;///
+	}
+	boolean hasReachedMaximumQuality() {
+		return getQuality() == MAX_QUALITY;
 	}
 }
 
