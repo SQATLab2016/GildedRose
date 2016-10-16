@@ -1,176 +1,267 @@
 package fi.oulu.tol.sqat.tests;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
-
 import fi.oulu.tol.sqat.GildedRose;
 import fi.oulu.tol.sqat.Item;
 
 public class GildedRoseTest {
+	GildedRose store = new GildedRose();
 
-// Example scenarios for testing
-//   Item("+5 Dexterity Vest", 10, 20));
-//   Item("Aged Brie", 2, 0));
-//   Item("Elixir of the Mongoose", 5, 7));
-//   Item("Sulfuras, Hand of Ragnaros", 0, 80));
-//   Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
-//   Item("Conjured Mana Cake", 3, 6));
-
+	// Test Aged Brie
 	@Test
-	public void testUpdateEndOfDay_AgedBrie_Quality_10_11() {
+	public void testUpdateEndOfDay_AgedBrie_Quality_2_10() {
 		// Arrange
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Aged Brie", 2, 10) );
-		
+		store.addItem(new Item("Aged Brie", 2, 10));
 		// Act
 		store.updateEndOfDay();
-		
 		// Assert
-		List<Item> items = store.getItems();
-		Item itemBrie = items.get(0);
-		assertEquals(11, itemBrie.getQuality());
-	}
-    
-	@Test
-	public void testUpdateEndOfDay_Sulfuras() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80) );
-		
-		store.updateEndOfDay();
-		List<Item> items = store.getItems();
-		Item itemBrie = items.get(0);
-		assertEquals("error in Sulfuras",80,itemBrie.getQuality());
-	}
-	
-	@Test
-	public void testUpdateEndOfDay_NegativeQuality() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Conjured Mana Cake", 10, 20) );
-		for(int i=0 ; i<10000; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertTrue("quality can´t be negative", 0 <= item.getQuality());
-	}
-	
-	@Test
-	public void testUpdateEndOfDay_QualityMoreThan50() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Aged Brie", 10, 20) );
-		for(int i=0 ; i<100000; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertTrue("error in Aged Brie quality can´t be more than 50", 50 >= item.getQuality());
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Aged Brie increases";
+		assertEquals(failMessage, 11, quality);
 	}
 
 	@Test
-	public void testUpdateEndOfDay_DatePassed() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("+5 Dexterity Vest", 0, 30) );
-		for(int i=0 ; i<10; i++){
+	public void testUpdateEndOfDay_AgedBrie_Quality_10_50() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", 10, 50));
+		// Act
 		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("quality should change twice when the date passed", 10, item.getQuality());
-	}
-	
-	@Test
-	public void testUpdateEndOfDay_Backstage_passes() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 5) );
-		for(int i=0 ; i<10; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("error än backstage passes", 30, item.getQuality());
-	}
-	
-	@Test
-	public void testUpdateEndOfDay_Backstage_passes_to_zero_after_concert() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 5) );
-		for(int i=0 ; i<11; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("error in backstage passes its quality cant be 0", 0, item.getQuality());
-	}
-	@Test
-	public void testUpdateEndOfDay_Backstage_cant_be_more_than_50() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 35) );
-		for(int i=0 ; i<10; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("error in backstage passes its quality cant be more than 50", 50, item.getQuality());
-	}
-	@Test
-	public void testUpdateEndOfDay_QualityDecreasesTwiceAfterDate() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("+5 Dexterity Vest", 10, 50) );
-		for(int i=0 ; i<20; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("quality should change twice", 20, item.getQuality());
-	}
-	@Test
-	public void testUpdateEndOfDay_SellInDate() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("+5 Dexterity Vest", 10, 50) );
-		for(int i=0 ; i<20; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("error in decrasing SellIn", -10, item.getSellIn());
-	}
-	
-	public void testUpdateEndOfDay_SellInDateOf_Backstage() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50) );
-		for(int i=0 ; i<20; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("error in decrasing SellIn of Backstage passes", -10, item.getSellIn());
-	}
-	
-	public void testUpdateEndOfDay_SellInDateOf_Sulfuras() {
-		GildedRose store = new GildedRose();
-		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 30, 50) );
-		for(int i=0 ; i<20; i++){
-		store.updateEndOfDay();
-		}
-		
-		List<Item> items = store.getItems();
-		Item item = items.get(0);
-		assertEquals("error in decrasing SellIn of Sulfuras", 10, item.getSellIn());
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "The Quality of an item is never more than 50";
+		assertEquals(failMessage, 50, quality);
 	}
 
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_Quality_0_10() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", 0, 10));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "The Quality of Aged Brie increases twice after SellIn date has passed";
+		assertEquals(failMessage, 12, quality);
+	}
 
-	
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_Quality_0_50() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", 0, 50));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "The Quality of Aged Brie is never more than 50increases twice after SellIn date has passed";
+		assertEquals(failMessage, 50, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_Quality_Minus1_20() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", -1, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "The Quality of Aged Brie increases twice after SellIn date has passed";
+		assertEquals(failMessage, 22, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_SellIn_2_10() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", 2, 10));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "SellIn date decreases";
+		assertEquals(failMessage, 1, sellIn);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_SellIn_1_10() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", 1, 10));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "SellIn date decreases";
+		assertEquals(failMessage, 0, sellIn);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_SellIn_0_10() {
+		// Arrange
+		store.addItem(new Item("Aged Brie", 0, 10));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "SellIn date decreases";
+		assertEquals(failMessage, -1, sellIn);
+	}
+
+	// Test Sulfuras
+	@Test
+	public void testUpdateEndOfDay_Sulfuras_Quality_0_80() {
+		// Arrange
+		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Sulfuras is 80 and never alters";
+		assertEquals(failMessage, 80, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Sulfuras_SellIn_5_80() {
+		// Arrange
+		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 5, 80));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "Sulfuras, being a legendary item, never has to be sold";
+		assertEquals(failMessage, 5, sellIn);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Sulfuras_SellIn_0_80() {
+		// Arrange
+		store.addItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "Sulfuras, being a legendary item, never has tobe sold";
+		assertEquals(failMessage, 0, sellIn);
+	}
+
+	// Test Backstage pass
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_15_20() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Backstage pass increases by 1 whenthere are more than 10 days";
+		assertEquals(failMessage, 21, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_10_20() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Backstage pass increases by 2 when there are 10 or less days";
+		assertEquals(failMessage, 22, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_8_20() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 8, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Backstage pass increases by 2 when there are 10 or less days";
+		assertEquals(failMessage, 22, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_5_20() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Backstage pass increases by 3 when there are 5 or less days";
+		assertEquals(failMessage, 23, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_3_20() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 3, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Backstage pass increases by 3 when there are 5 or less days";
+		assertEquals(failMessage, 23, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_0_20() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality of Backstage drops to 0 after the concert";
+		assertEquals(failMessage, 0, quality);
+	}
+	@Test
+	public void testUpdateEndOfDay_Backstage_Quality_15_50() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 50));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "The Quality of an item is never more than 50";
+		assertEquals(failMessage, 50, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_Backstage_SellIn_5_10() {
+		// Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "The SellIn value should decrease by 1";
+		assertEquals(failMessage, 4, sellIn);
+	}
+
+	// Test Elixir
+	@Test
+	public void testUpdateEndOfDay_Elixir_Quality_2_7() {
+		// Arrange
+		store.addItem(new Item("Elixir of the Mongoose", 2, 7));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int quality = store.getItems().get(0).getQuality();
+		String failMessage = "Quality decreases by 1";
+		assertEquals(failMessage, 6, quality);
+	}
+
+	@Test
+	public void testUpdateEndOfDay_SellIn_Quality_2_7() {
+		// Arrange
+		store.addItem(new Item("Elixir of the Mongoose", 2, 7));
+		// Act
+		store.updateEndOfDay();
+		// Assert
+		int sellIn = store.getItems().get(0).getSellIn();
+		String failMessage = "SelIn decreases by 1";
+		assertEquals(failMessage, 1, sellIn);
+	}
 }
