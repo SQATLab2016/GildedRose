@@ -6,6 +6,10 @@ import java.util.List;
 
 public class GildedRose {
 
+	private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+	private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
+	private static final String AGED_BRIE = "Aged Brie";
+	private static final int SELL_IN_TEN = 10, SELL_IN_FIVE = 5;
 	private static List<Item> items = null;
 
 	public List<Item> getItems() {
@@ -21,78 +25,48 @@ public class GildedRose {
 	}
     public static void updateEndOfDay()
     {
-        for (int i = 0; i < items.size(); i++)
-        {
-            if ((!"Aged Brie".equals(items.get(i).getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName())) 
+    	for(Item item:items){
+    		
+    		if (!SULFURAS.equals(item.getName()))
             {
-                if (items.get(i).getQuality() > 0)
-                {
-                    if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() - 1);
-                    }
-                }
+                item.decreaseSellIn();
             }
-            else
+    		
+            if ((AGED_BRIE.equals(item.getName())) || BACKSTAGE_PASSES.equals(item.getName())) 
             {
-                if (items.get(i).getQuality() < 50)
+                if (BACKSTAGE_PASSES.equals(item.getName()) && item.getSellIn() <= SELL_IN_TEN)
                 {
-                    items.get(i).setQuality(items.get(i).getQuality() + 1);
-
-                    if ("Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
+                    item.increaseQuality();
+                    
+                    if (item.getSellIn() <= SELL_IN_FIVE)
                     {
-                        if (items.get(i).getSellIn() < 11)
-                        {
-                            if (items.get(i).getQuality() < 50)
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
-                            }
-                        }
-
-                        if (items.get(i).getSellIn() < 6)
-                        {
-                            if (items.get(i).getQuality() < 50)
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() + 1);
-                            }
-                        }
+                        item.increaseQuality();
                     }
                 }
+                item.increaseQuality();
+            }
+            else if (!SULFURAS.equals(item.getName()))
+            {
+            	item.decreaseQuality();
             }
 
-            if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
-            {
-                items.get(i).setSellIn(items.get(i).getSellIn() - 1);
-            }
 
-            if (items.get(i).getSellIn() < 0)
+            if (item.isExpired())
             {
-                if (!"Aged Brie".equals(items.get(i).getName()))
+                if (AGED_BRIE.equals(item.getName()))
                 {
-                    if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
-                    {
-                        if (items.get(i).getQuality() > 0)
-                        {
-                            if (!"Sulfuras, Hand of Ragnaros".equals(items.get(i).getName()))
-                            {
-                                items.get(i).setQuality(items.get(i).getQuality() - 1);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() - items.get(i).getQuality());
-                    }
+                    item.increaseQuality();
                 }
-                else
+                else if (BACKSTAGE_PASSES.equals(item.getName()))
                 {
-                    if (items.get(i).getQuality() < 50)
-                    {
-                        items.get(i).setQuality(items.get(i).getQuality() + 1);
-                    }
+            		item.setQuality(0);
                 }
+                else if(!SULFURAS.equals(item.getName()))
+	            {
+	                item.decreaseQuality();
+	            }
             }
         }
     }
-
+    
 }

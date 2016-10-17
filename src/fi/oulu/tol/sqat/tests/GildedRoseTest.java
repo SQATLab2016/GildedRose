@@ -135,6 +135,18 @@ public class GildedRoseTest {
 		store.updateEndOfDay();
 		List<Item> items = store.getItems();
 		Item item = items.get(1);
-		assertEquals(0, item.getQuality());
+		assertEquals(4, item.getQuality());
+	}
+	@Test
+	public void testUpdateEndOfDay_AgedBrie_Quality_0_10() {
+	// Arrange
+	GildedRose store1 = new GildedRose();
+	store1.addItem(new Item("Aged Brie", 0, 10) );
+	// Act
+	store1.updateEndOfDay();
+	// Assert
+	int quality = store.getItems().get(0).getQuality();
+	String failMessage = "The Quality of Aged Brie increases twice afterSellIn date has passed";
+	assertEquals(failMessage, 12, quality);
 	}
 }
