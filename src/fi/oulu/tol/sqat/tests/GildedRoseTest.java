@@ -22,7 +22,6 @@ public class GildedRoseTest {
 		String failMessage = "Quality of Aged Brie increases";
 		assertEquals(failMessage, 11, quality);
 	}
-
 	@Test
 	public void testUpdateEndOfDay_AgedBrie_Quality_10_50() {
 		// Arrange

@@ -10,11 +10,9 @@ public class GildedRose {
 	public List<Item> getItems() {
 		return items;
 	}
-
 	public void addItem(Item item) {
 		items.add(item);
 	}
-
 	public GildedRose() {
 		items = new ArrayList<Item>();
 	}
