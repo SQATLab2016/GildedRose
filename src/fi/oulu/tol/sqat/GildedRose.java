@@ -14,12 +14,6 @@ public class GildedRose {
 	private static final String SULFURAS_NAME			= "Sulfuras, Hand of Ragnaros";
 	private static final String BACKSTAGE_PASSES_NAME	= "Backstage passes to a TAFKAL80ETC concert";
 	private static final String MANA_CAKE_NAME			= "Conjured Mana Cake";
-	
-	private String[] specialItemNames = {
-			BACKSTAGE_PASSES_NAME,
-			AGED_BRIE_NAME,
-			SULFURAS_NAME,
-	};
 
 	private int currentItemQuality;
 	private String currentItemName;
@@ -64,21 +58,24 @@ public class GildedRose {
         	currentItemSellIn = items.get(i).getSellIn(); 
         	currentItemName = items.get(i).getName();
 
-        	updateSpecialItemQualities();
+        	updateItemQualitiesBeforeSellIn();
         	updateSellIn();
         	
-        	//if (!isSpecialItemName(currentItemName))
-        		updateItemQualities();
+        	if (currentItemSellIn < 0)
+        		updateItemQualitiesAfterSellIn();
             
             items.get(i).setQuality(currentItemQuality);
             items.get(i).setSellIn(currentItemSellIn);
         }
     }
     
-    private void updateSpecialItemQualities() {
+    private void updateItemQualitiesBeforeSellIn() {
     	if ((AGED_BRIE_NAME.equals(currentItemName))) {
     		incrementQuality();
-        } else if (BACKSTAGE_PASSES_NAME.equals(currentItemName)) {
+    		return;
+        }
+
+    	if (BACKSTAGE_PASSES_NAME.equals(currentItemName)) {
         	incrementQuality();
         	
         	if (currentItemSellIn < 11)
@@ -86,9 +83,12 @@ public class GildedRose {
 
             if (currentItemSellIn < 6)
             	incrementQuality();
-        } else {
-        	if (!SULFURAS_NAME.equals(currentItemName))
-            	decrementQuality();
+
+            return;
+        }
+
+        if (!SULFURAS_NAME.equals(currentItemName)) {
+            decrementQuality();
         }
     }
 
@@ -97,34 +97,19 @@ public class GildedRose {
         	currentItemSellIn--;
     }
     
-    private void updateItemQualities() {
-    	if (currentItemSellIn < 0)
-        {
-            if (!AGED_BRIE_NAME.equals(currentItemName))
-            {
-                if (!BACKSTAGE_PASSES_NAME.equals(currentItemName))
-                {
-                    if (currentItemQuality > 0)
-                    {
-                        if (!SULFURAS_NAME.equals(currentItemName))
-                        {
-                        	currentItemQuality--;
-                        }
-                    }
-                }
-                else
-                {
-                	currentItemQuality = currentItemQuality - currentItemQuality;
-                }
-            }
-            else
-            {
-                if (currentItemQuality < 50)
-                {
-                	currentItemQuality++;
-                }
-            }
+    private void updateItemQualitiesAfterSellIn() {
+        if (AGED_BRIE_NAME.equals(currentItemName)) {
+        	incrementQuality();
+        	return;
         }
+        
+        if (BACKSTAGE_PASSES_NAME.equals(currentItemName)) {
+        	currentItemQuality = currentItemQuality - currentItemQuality;
+        	return;
+        }
+
+        if (!SULFURAS_NAME.equals(currentItemName))
+        		decrementQuality();
     }
     
     private void incrementQuality() {
@@ -135,15 +120,6 @@ public class GildedRose {
     private void decrementQuality() {
     	if (currentItemQuality > 0)
     		currentItemQuality--;
-    }
-    
-    private boolean isSpecialItemName(String nameToTest) {
-    	for (int i = 0; i < specialItemNames.length; i++) {
-    		if (nameToTest.equals(specialItemNames[i]))
-    			return true;
-    	}
-    	
-    	return false;
     }
 
 }
