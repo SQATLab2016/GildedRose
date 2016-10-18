@@ -31,5 +31,42 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+
+	public boolean zeroQuality() {
+		// TODO Auto-generated method stub
+		if (quality <= 0)
+			return true;
+		return false;
+	}
+
+	public boolean maxQuality() {
+		// TODO Auto-generated method stub
+		if (quality >= 50)
+			return true;
+		return false;
+	}
+
+	public void reduceQuality() {
+		// TODO Auto-generated method stub
+		quality--;
+	}
+
+	public void increaseQuality() {
+		// TODO Auto-generated method stub
+		quality++;
+		
+	}
+
+	public void reduceSellIn() {
+		// TODO Auto-generated method stub
+		sellIn--;
+	}
+
+	public boolean zeroSellIn() {
+		// TODO Auto-generated method stub
+		if (sellIn < 0)
+			return true;
+		return false;
+	}
 }
 
