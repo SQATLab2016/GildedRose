@@ -83,6 +83,7 @@ public class GildedRoseTest {
 	String failMessage = "SellIn date decreases";
 	assertEquals(failMessage, 1, sellIn);
 	}
+	
 	@Test
 	public void testUpdateEndOfDay_AgedBrie_SellIn_1_10() {
 	// Arrange
@@ -95,6 +96,7 @@ public class GildedRoseTest {
 	assertEquals(failMessage, 0, sellIn);
 	}
 	
+	
 	@Test
 	public void testUpdateEndOfDay_AgedBrie_SellIn_0_10() {
 		// Arrange
@@ -106,7 +108,9 @@ public class GildedRoseTest {
 		String failMessage = "SellIn date decreases";
 		assertEquals(failMessage, -1, sellIn);
 		}
-		// Test Sulfuras
+		
+	
+	// Test Sulfuras
 		@Test
 		public void testUpdateEndOfDay_Sulfuras_Quality_0_80() {
 		// Arrange
