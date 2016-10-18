@@ -35,7 +35,6 @@ public class GildedRose {
 			}
 		}
 	}
-
 	private static Item changeQuality(Item item) {
 		if (AGED_BRIE.equals(item.getName())) {
 			item.increaseQuality();
