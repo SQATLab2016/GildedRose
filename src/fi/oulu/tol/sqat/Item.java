@@ -11,6 +11,33 @@ public class Item {
 		this.setSellIn(sellIn);
 		this.setQuality(quality);
 	}
+  public boolean HasExpired (int x){
+    	return true;
+  }
+  public boolean isMaximumQuality(){
+	  return true;
+  }
+  public boolean hasZeroQuality(){
+	  return true;
+  }
+
+    
+    public void decreaseQuality(int x){
+    	quality = quality - x;
+    }
+    
+    public void increaseQuality(int x){
+    	quality = quality + x;
+    }
+    
+    public void decreaseSellIn(){
+    	sellIn = sellIn - 1;
+    }
+    
+    public void setSulfuras(){
+    	quality = 80;
+    	sellIn = 5;
+    }
     
 	/* Generated getter and setter code */
     public String getName() {
