@@ -58,37 +58,11 @@ public class GildedRose {
         	currentItemSellIn = items.get(i).getSellIn(); 
         	currentItemName = items.get(i).getName();
 
-        	updateItemQualitiesBeforeSellIn();
         	updateSellIn();
-        	
-        	if (currentItemSellIn < 0)
-        		updateItemQualitiesAfterSellIn();
+        	updateItemQualities();
             
             items.get(i).setQuality(currentItemQuality);
             items.get(i).setSellIn(currentItemSellIn);
-        }
-    }
-    
-    private void updateItemQualitiesBeforeSellIn() {
-    	if ((AGED_BRIE_NAME.equals(currentItemName))) {
-    		incrementQuality();
-    		return;
-        }
-
-    	if (BACKSTAGE_PASSES_NAME.equals(currentItemName)) {
-        	incrementQuality();
-        	
-        	if (currentItemSellIn < 11)
-        		incrementQuality();
-
-            if (currentItemSellIn < 6)
-            	incrementQuality();
-
-            return;
-        }
-
-        if (!SULFURAS_NAME.equals(currentItemName)) {
-            decrementQuality();
         }
     }
 
@@ -97,19 +71,45 @@ public class GildedRose {
         	currentItemSellIn--;
     }
     
-    private void updateItemQualitiesAfterSellIn() {
-        if (AGED_BRIE_NAME.equals(currentItemName)) {
-        	incrementQuality();
-        	return;
-        }
-        
-        if (BACKSTAGE_PASSES_NAME.equals(currentItemName)) {
-        	currentItemQuality = currentItemQuality - currentItemQuality;
-        	return;
-        }
+    private void updateItemQualities() {
+    	switch (currentItemName) {
+    	case AGED_BRIE_NAME:
+    		updateAgedBrieQuality();
+    		break;
+    	case BACKSTAGE_PASSES_NAME:
+    		updateBackstagePassesQuality();
+    		break;
+    	case SULFURAS_NAME:
+    		break;
+    	default:
+    		updateNormalItemQuality();
+    	};
+    }
+    
+    private void updateAgedBrieQuality() {
+    	incrementQuality();
+    	
+    	if (sellInPassed())
+    		incrementQuality();
+    }
+    
+    private void updateBackstagePassesQuality() {
+    	if (sellInPassed()) {
+    		setQuality(0);
+    		return;
+    	}
+    	
+    	incrementQuality();
+    	
+    	if (currentItemSellIn < 11)
+    		incrementQuality();
 
-        if (!SULFURAS_NAME.equals(currentItemName))
-        		decrementQuality();
+        if (currentItemSellIn < 6)
+        	incrementQuality();
+    }
+    
+    private void updateNormalItemQuality() {
+    	decrementQuality();
     }
     
     private void incrementQuality() {
@@ -120,6 +120,14 @@ public class GildedRose {
     private void decrementQuality() {
     	if (currentItemQuality > 0)
     		currentItemQuality--;
+    }
+    
+    private void setQuality(int newQuality) {
+    	currentItemQuality = newQuality;
+    }
+    
+    private boolean sellInPassed() {
+    	return currentItemSellIn < 0;
     }
 
 }
