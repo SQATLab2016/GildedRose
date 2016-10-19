@@ -17,14 +17,18 @@ public class Item {
     	else return false;
   }
   public boolean isMaximumQuality(){
-	  if (quality >= 50){
-	  return true;}
+	  if (quality >= 50)
+	  {
+		  quality = 50;
+		  return true;
+	  }
 	  else return false;
   }
   public boolean hasZeroQuality(){
 	  return true;
   }
   public boolean isSpecial(){
+	  /*lists some special items*/
 	  if (name=="Backstage passes to a TAFKAL80ETC concert" 
 		|| name == "Aged Brie"
 		|| name == "Sulfuras, Hand of Ragnaros")

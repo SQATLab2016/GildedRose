@@ -25,7 +25,7 @@ public class GildedRose {
         {
             Item item = items.get(i);
             
-            if (item.isSpecial())
+            if (item.isSpecial())/*item string is in 'special item' list*/
             {
             	if ("Backstage passes to a TAFKAL80ETC concert".equals(item.getName()))
             	{
@@ -36,14 +36,14 @@ public class GildedRose {
             				item.increaseQuality(1);
             			}
             		}
-            		else if (item.getSellIn() < 11 && item.getSellIn() > 5)
+            		else if (item.getSellIn() <= 10 && item.getSellIn() > 5)
             		{
             			if (!item.isMaximumQuality())
             			{
             				item.increaseQuality(2);
             			}
             		}
-            		else if (item.getSellIn() < 6 && item.getSellIn() > 0)
+            		else if (item.getSellIn() <= 5 && item.getSellIn() > 0)
             		{
             			if (!item.isMaximumQuality())
             			{
@@ -81,9 +81,9 @@ public class GildedRose {
                 	item.decreaseQuality(2);
                 	item.decreaseSellIn();
                 	}
-            }
-        }
-    }
+            	}
+        	}
+    	}
     
 
 }
