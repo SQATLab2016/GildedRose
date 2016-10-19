@@ -6,6 +6,12 @@ import java.util.List;
 
 public class GildedRose {
 
+	private static final Item ITEM6 = new Item("Conjured Mana Cake", 3, 6);
+	private static final Item ITEM5 = new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20);
+	private static final Item ITEM4 = new Item("Sulfuras, Hand of Ragnaros", 0, 80);
+	private static final Item ITEM3 = new Item("Elixir of the Mongoose", 5, 7);
+	private static final Item ITEM2 = new Item("Aged Brie", 2, 0);
+	private static final Item ITEM = new Item("+5 Dexterity Vest", 10, 20);
 	private static List<Item> items = null;
 
 	/**
@@ -16,12 +22,12 @@ public class GildedRose {
         System.out.println("OMGHAI!");
 		
         items = new ArrayList<Item>();
-        items.add(new Item("+5 Dexterity Vest", 10, 20));
-        items.add(new Item("Aged Brie", 2, 0));
-        items.add(new Item("Elixir of the Mongoose", 5, 7));
-        items.add(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
-        items.add(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
-        items.add(new Item("Conjured Mana Cake", 3, 6));
+        items.add(ITEM);
+        items.add(ITEM2);
+        items.add(ITEM3);
+        items.add(ITEM4);
+        items.add(ITEM5);
+        items.add(ITEM6);
 
         updateQuality();
 }

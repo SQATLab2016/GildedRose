@@ -9,4 +9,10 @@ public class GildedRoseTest {
 	public void testTheTruth() {
 		assertTrue(true);
 	}
+	
+	@Test
+	public void testVest(){
+		//GildedRose store = new GildedRose();
+		
+	}
 }
