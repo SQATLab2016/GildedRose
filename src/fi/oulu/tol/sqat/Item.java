@@ -31,5 +31,38 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+	
+	public void decreaseQuality(int decrease) {
+		if(this.quality - decrease > 0) {
+			this.quality -= decrease;
+		}
+		else {
+			this.quality = 0;
+		}
+	}
+	
+	public void increaseQuality(int increase) {
+		if(this.quality + increase <= 50) {
+			this.quality += increase;
+		}
+		else {
+			this.quality = 50;
+		}
+	}
+	
+	public void decreaseSellIn(int decrease) {
+		if (!"Sulfuras, Hand of Ragnaros".equals(getName())) {
+			this.sellIn -= decrease;
+		}
+	}
+	
+	public boolean isExpired() {
+		if(getSellIn()<=0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
 
