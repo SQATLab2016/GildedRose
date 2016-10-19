@@ -31,5 +31,26 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+	
+	/* Ari's implementations */
+	public void increaseQuality(int quality) {
+		this.setQuality(getQuality() + 1);
+	}
+	public void decreaseQuality(int quality) {
+		this.setQuality(getQuality() - 1);
+	}
+	public void decreaseSellIn(int sellIn) {
+		this.setSellIn(getSellIn() - 1);
+	}
+	public void isExpired() {
+		// Not implemented yet
+	}
+	public void hasReachedMaximumQuality() {
+		// Not implemented yet
+	}
+	public void hasZeroQuality(int quality) {
+		// Not implemented yet
+	}
+
 }
 
