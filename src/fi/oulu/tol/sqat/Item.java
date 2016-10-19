@@ -31,5 +31,29 @@ public class Item {
 	public void setQuality(int quality) {
 		this.quality = quality;
 	}
+	public void decreaseQuality(int amount) {
+		this.quality -= amount;
+	}
+	public void increaseQuality(int amount) {
+		this.quality += amount;
+	}
+	public void increaseSellIn(int amount) {
+		this.sellIn += amount;
+	}
+	public void decreaseSellIn(int amount) {
+		this.sellIn -= amount;
+	}
+	public boolean hasPositiveQuality() {
+		if (this.quality > 0) return true;
+		return false;
+	}
+	public boolean canIncreaseQuality() {
+		if (this.quality < 50) return true;
+		return false;
+	}
+	public boolean hasExpired() {
+		if (this.sellIn < 0) return true;
+		return false;
+	}
 }
 
