@@ -24,70 +24,60 @@ public class GildedRose {
         for (int i = 0; i < items.size(); i++)
         {
             Item item = items.get(i);
-			if ((!"Aged Brie".equals(item.getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(item.getName())) 
+            
+            /*if item is 'special'*/
+            
+            if ("Backstage passes to a TAFKAL80ETC concert".equals(item.getName()) 
+        		|| "Aged Brie".equals(item.getName())
+        		|| "Sulfuras, Hand of Ragnaros".equals(item.getName()))
             {
-                if (item.getQuality() > 0)
-                {
-                    item.decreaseQuality(1);
-                }
+            	if ("Backstage passes to a TAFKAL80ETC concert".equals(item.getName()))
+            	{
+            		if (item.getSellIn() > 10)
+            		{
+            			if (item.getQuality() < 50)
+            			{
+            				item.increaseQuality(1);
+            			}
+            		}
+            		else if (item.getSellIn() < 11 && item.getSellIn() > 5)
+            		{
+            			if (item.getQuality() < 50)
+            			{
+            				item.increaseQuality(2);
+            			}
+            		}
+            		else if (item.getSellIn() < 6 && item.getSellIn() > 0)
+            		{
+            			if (item.getQuality() < 50)
+            			{
+            				item.increaseQuality(3);
+            			}
+            		}
+            		else if (item.getSellIn() <= 0)
+            		{
+            				item.setQuality(0);
+            		}
+            	}
+            	else if ("Aged Brie".equals(item.getName()))
+            	{
+            		if(item.getQuality() < 50 && item.getSellIn() > 0){
+            			item.increaseQuality(1);
+            		}
+            	}
+            	
+            	item.decreaseSellIn();
+            	
+            	if ("Sulfuras, Hand of Ragnaros".equals(item.getName()))
+            	{
+            		item.setSulfuras();
+            		/*if item is Sulfuras, ignore everything above, set Sulfuras stats*/
+            	}
             }
-            else
-            {
-                if (item.getQuality() < 50)
-                {
-                    item.setQuality(item.getQuality() + 1);
-
-                    if ("Backstage passes to a TAFKAL80ETC concert".equals(item.getName()))
-                    {
-                        if (item.getSellIn() < 11)
-                        {
-                            if (item.getQuality() < 50)
-                            {
-                            	item.increaseQuality(1);
-                            }
-                        }
-
-                        if (item.getSellIn() < 6)
-                        {
-                            if (item.getQuality() < 50)
-                            {
-                            	item.increaseQuality(1);
-                            }
-                        }
-                    }
-                }
-            }
-
-                item.decreaseSellIn();
-
-            if (item.getSellIn() < 0)
-            {
-                if (!"Aged Brie".equals(item.getName()))
-                {
-                    if (!"Backstage passes to a TAFKAL80ETC concert".equals(item.getName()))
-                    {
-                        if (item.getQuality() > 0)
-                        {
-                        	item.decreaseQuality(1);
-                        }
-                    }
-                    else
-                    {
-                        item.setQuality(item.getQuality() - item.getQuality());
-                    }
-                }
-                else
-                {
-                    if (item.getQuality() < 50)
-                    {
-                    	item.increaseQuality(1);
-                    }
-                }
-            }
-            if ("Sulfuras, Hand of Ragnaros".equals(item.getName()))
-            {
-                item.setSulfuras();
-                /*if Sulfuras, ignore everything above, set Sulfuras stats*/
+            /*otherwise item is normal*/
+            else{ 
+            	item.decreaseQuality(1);
+            	item.decreaseSellIn();
             }
         }
     }

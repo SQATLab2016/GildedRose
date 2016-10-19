@@ -20,6 +20,13 @@ public class Item {
   public boolean hasZeroQuality(){
 	  return true;
   }
+  public boolean checkSpecial(){
+	  return true;
+
+  }
+  public boolean isSpecial(){
+	  return true;
+  }
 
     
     public void decreaseQuality(int x){
