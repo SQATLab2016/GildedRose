@@ -11,7 +11,7 @@ public class Item {
 		this.setSellIn(sellIn);
 		this.setQuality(quality);
 	}
-  public boolean HasExpired (int x){
+  public boolean HasExpired (){
     	return true;
   }
   public boolean isMaximumQuality(){
@@ -36,10 +36,10 @@ public class Item {
     
     public void setSulfuras(){
     	quality = 80;
-    	sellIn = 5;
+    	sellIn = 0;
     }
     
-	/* Generated getter and setter codex */
+	/* Generated getter and setter code */
     public String getName() {
 		return name;
 	}

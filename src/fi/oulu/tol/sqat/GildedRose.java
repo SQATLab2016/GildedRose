@@ -86,7 +86,8 @@ public class GildedRose {
             }
             if ("Sulfuras, Hand of Ragnaros".equals(item.getName()))
             {
-                item.setSulfuras();/*if Sulfuras, ignore everything above, set Sulfuras stats*/
+                item.setSulfuras();
+                /*if Sulfuras, ignore everything above, set Sulfuras stats*/
             }
         }
     }

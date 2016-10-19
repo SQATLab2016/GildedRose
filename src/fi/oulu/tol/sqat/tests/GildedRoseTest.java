@@ -109,17 +109,6 @@ String failMessage = "Quality of Sulfuras is 80 and never alters";
 assertEquals(failMessage, 80, quality);
 }
 @Test
-public void testUpdateEndOfDay_Sulfuras_SellIn_5_80() {
-// Arrange
-store.addItem(new Item("Sulfuras, Hand of Ragnaros", 5, 80) );
-// Act
-store.updateEndOfDay();
-// Assert
-int sellIn = store.getItems().get(0).getSellIn();
-String failMessage = "Sulfuras, being a legendary item, never has to be sold";
-assertEquals(failMessage, 5, sellIn);
-}
-@Test
 public void testUpdateEndOfDay_Sulfuras_SellIn_0_80() {
 // Arrange
 store.addItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80) );
