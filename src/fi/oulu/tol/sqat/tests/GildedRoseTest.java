@@ -52,11 +52,6 @@ public class GildedRoseTest {
     
     
 	@Test
-	public void testUpdateEndOfDay() {
-		fail("Test not implemented");
-	}
-	
-	@Test
 	public void testUpdateEndOfDay_Conjured_mana_cake_Quality_3_6() {
 		//Arrange
 		GildedRose store = new GildedRose();
