@@ -1,5 +1,8 @@
 package fi.oulu.tol.sqat;
 
+//Refactoring KLA 18.10.2016
+
+
 import java.util.ArrayList;
 import java.util.List;
 
