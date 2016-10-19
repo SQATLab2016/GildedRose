@@ -39,7 +39,7 @@ public class Item {
     	sellIn = 5;
     }
     
-	/* Generated getter and setter code */
+	/* Generated getter and setter codex */
     public String getName() {
 		return name;
 	}

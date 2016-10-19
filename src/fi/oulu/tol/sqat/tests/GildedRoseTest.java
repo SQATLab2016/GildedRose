@@ -96,7 +96,7 @@ int sellIn = store.getItems().get(0).getSellIn();
 String failMessage = "SellIn date decreases";
 assertEquals(failMessage, -1, sellIn);
 }
-// Test Sulfuras
+// Test Sulfurasx
 @Test
 public void testUpdateEndOfDay_Sulfuras_Quality_0_70() {
 // Arrange
