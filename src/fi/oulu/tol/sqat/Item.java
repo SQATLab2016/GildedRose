@@ -12,21 +12,25 @@ public class Item {
 		this.setQuality(quality);
 	}
   public boolean HasExpired (){
-    	return true;
+	  if (sellIn<=0){
+    	return true;}
+    	else return false;
   }
   public boolean isMaximumQuality(){
-	  return true;
+	  if (quality >= 50){
+	  return true;}
+	  else return false;
   }
   public boolean hasZeroQuality(){
 	  return true;
   }
-  public boolean checkSpecial(){
-	  return true;
-
-  }
   public boolean isSpecial(){
-	  return true;
-  }
+	  if (name=="Backstage passes to a TAFKAL80ETC concert" 
+		|| name == "Aged Brie"
+		|| name == "Sulfuras, Hand of Ragnaros")
+        {return true;}
+	  	else return false;
+}
 
     
     public void decreaseQuality(int x){
@@ -38,6 +42,7 @@ public class Item {
     }
     
     public void decreaseSellIn(){
+    	/*sellIn only ever decreases by 1*/
     	sellIn = sellIn - 1;
     }
     
