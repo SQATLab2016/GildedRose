@@ -7,6 +7,8 @@ public class Item {
     public int quality; 
     
     public Item(String name, int sellIn, int quality) {
+    	super();
+    	
 		this.setName(name);
 		this.setSellIn(sellIn);
 		this.setQuality(quality);
