@@ -139,7 +139,7 @@ public class GildedRoseTest {
 	}
 	
 	@Test
-	public void testUpdateQuality_Bacckstage_49_quality_to_zero() {
+	public void testUpdateQuality_Backstage_49_quality_to_zero() {
 		//Arrange
 		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 0, 49));
 		//Act
@@ -151,7 +151,7 @@ public class GildedRoseTest {
 	}
 	
 	@Test
-	public void testUpdateQuality_Bacckstage_20_49() {
+	public void testUpdateQuality_Backstage_20_49() {
 		//Arrange
 		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 20, 49));
 		//Act
@@ -163,7 +163,7 @@ public class GildedRoseTest {
 	}
 
 	@Test
-	public void testUpdateQuality_Bacckstage_3_0() {
+	public void testUpdateQuality_Backstage_3_0() {
 		//Arrange
 		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 3, 0));
 		//Act
@@ -175,7 +175,7 @@ public class GildedRoseTest {
 	}
 	
 	@Test
-	public void testUpdateQuality_Bacckstags_quality_increase_three_0_0() {
+	public void testUpdateQuality_Backstage_quality_increase_three_0_0() {
 		//Arrange
 		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 6, 0));
 		//Act
@@ -184,6 +184,30 @@ public class GildedRoseTest {
 		int	quality	= store.getItems().get(0).getQuality();
 		String 	failMessage	="Backstage passes quality increasess twice"	;
 		assertEquals(failMessage, 2, quality);
+	}
+	
+	@Test
+	public void testUpdateQuality_Backstage_quality_max() {
+		//Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 6, 50));
+		//Act
+		store.updateEndOfDay();
+		//Assert
+		int	quality	= store.getItems().get(0).getQuality();
+		String 	failMessage	="Backstage passes quality max"	;
+		assertEquals(failMessage, 50, quality);
+	}
+
+	@Test
+	public void testUpdateQuality_Bacckstage_quality_max_sellin() {
+		//Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 11, 50));
+		//Act
+		store.updateEndOfDay();
+		//Assert
+		int	quality	= store.getItems().get(0).getQuality();
+		String 	failMessage	="Backstage passes quality max"	;
+		assertEquals(failMessage, 50, quality);
 	}
 	
 	@Test
@@ -196,6 +220,18 @@ public class GildedRoseTest {
 		int	sellIn	= store.getItems().get(0).getSellIn();
 		String 	failMessage	="Backstage passes sellIn date decreases"	;
 		assertEquals(failMessage, 2, sellIn);
+	}
+	
+	@Test
+	public void testUpdateQuality_Bacckstags_sellIn_minus3_0() {
+		//Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", -3, 0));
+		//Act
+		store.updateEndOfDay();
+		//Assert
+		int	quality	= store.getItems().get(0).getQuality();
+		String 	failMessage	="Backstage passes quality is zero"	;
+		assertEquals(failMessage, 0, quality);
 	}
 	
 	@Test
@@ -257,7 +293,18 @@ public class GildedRoseTest {
 		String 	failMessage	="Elixir quality decreases once"	;
 		assertEquals(failMessage, 9, quality);
 	}
-
+	
+	@Test
+	public void testUpdateQuality_Elixir_quality_max_sellinnegative() {
+		//Arrange
+		store.addItem(new Item("Elixir of the Mongoose", -1, 50));
+		//Act
+		store.updateEndOfDay();
+		//Assert
+		int	quality	= store.getItems().get(0).getQuality();
+		String 	failMessage	="Elixir quality decreases twice"	;
+		assertEquals(failMessage, 48, quality);
+	}
 
 	
 

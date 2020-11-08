@@ -124,6 +124,7 @@ public class GildedRose {
 	}
 	
 	public void updateEndOfDay() {
+
 		updateQuality();
 	}
 	
