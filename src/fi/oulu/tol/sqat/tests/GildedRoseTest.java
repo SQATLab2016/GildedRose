@@ -175,7 +175,7 @@ public class GildedRoseTest {
 	}
 	
 	@Test
-	public void testUpdateQuality_Backstage_quality_increase_three_0_0() {
+	public void testUpdateQuality_Backstage_quality_increase_twice_6_0() {
 		//Arrange
 		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 6, 0));
 		//Act
@@ -186,6 +186,29 @@ public class GildedRoseTest {
 		assertEquals(failMessage, 2, quality);
 	}
 	
+	@Test
+	public void testUpdateQuality_Backstage_quality_increase_twice_conditional_11_0() {
+		//Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 11, 2));
+		//Act
+		store.updateEndOfDay();
+		//Assert
+		int	quality	= store.getItems().get(0).getQuality();
+		String 	failMessage	="Backstage passes quality increasess twice"	;
+		assertEquals(failMessage, 3, quality);
+	}
+	
+	@Test
+	public void testUpdateQuality_Backstage_quality_increase_twice_conditional_11_50() {
+		//Arrange
+		store.addItem(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50));
+		//Act
+		store.updateEndOfDay();
+		//Assert
+		int	quality	= store.getItems().get(0).getQuality();
+		String 	failMessage	="Backstage passes quality increasess twice"	;
+		assertEquals(failMessage, 50, quality);
+	}
 	@Test
 	public void testUpdateQuality_Backstage_quality_max() {
 		//Arrange
