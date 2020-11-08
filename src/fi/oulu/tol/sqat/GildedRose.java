@@ -27,7 +27,6 @@ public class GildedRose {
 }
 
 
-	
     public static void updateQuality()
     {
         for (int i = 0; i < items.size(); i++)
@@ -103,5 +102,30 @@ public class GildedRose {
             }
         }
     }
+    
+	public GildedRose() {
+		items = new ArrayList<Item>();
+	}
+
+
+	public void addItem(Item item) {
+		try {
+			items.add(item);
+		} catch (NullPointerException e) {
+
+			items = new ArrayList<Item>();
+			items.add(item);
+		}
+
+	}
+	
+	public List<Item> getItems() {
+		return items;
+	}
+	
+	public void updateEndOfDay() {
+		updateQuality();
+	}
+	
 
 }
